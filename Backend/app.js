@@ -4,6 +4,10 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
+const dotenv = require("dotenv");
+
+//config
+dotenv.config({path:"config/config.env"});
 
 const errorMiddleware = require("./middleware/error")
 const corsOptions ={
@@ -23,10 +27,12 @@ app.use(fileUpload());
 const product = require("./Routes/productRoute");
 const user = require("./Routes/userRoutes");
 const order = require("./Routes/orderRoute");
+const payment = require("./Routes/paymentRoute");
 
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
+app.use("/api/v1", payment);
 
 //Error Middleware
 app.use(errorMiddleware);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from "react";
 import './App.css';
 import Header from "./component/layout/Header/Header.js"
 import Footer from "./component/layout/Footer/Footer.js"
@@ -21,6 +22,13 @@ import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import Cart from "./component/Cart/Cart.js";
 import Delivery from "./component/Cart/Delivery.js";
+import ConfirmOrder from "./component/Cart/ConfirmOrder.js";
+import Payment from "./component/Cart/Payment.js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./component/Cart/OrderSuccess.js";
+import MyOrders from "./component/Order/MyOrders.js";
+import OrderDetails from "./component/Order/OrderDetails.js";
 
 // import ProtectedRoute from './component/Route/ProtectedRoute';
 
@@ -30,8 +38,15 @@ axios.defaults.withCredentials=true
 function App() {
 
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const [stripeApiKey, setStripeApiKey] = useState("");
 
-  React.useEffect(()=>{
+  async function getStripeApiKey() {
+    const { data } = await axios.get("http://localhost:4000/api/v1/stripeapikey");
+
+    setStripeApiKey(data.stripeApiKey);
+  }
+
+  useEffect(()=>{
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
@@ -39,6 +54,7 @@ function App() {
     });
 
     store.dispatch(loadUser());
+    getStripeApiKey();
 
   }, []);
 
@@ -46,6 +62,7 @@ function App() {
   <Router>
     <Header />
     {isAuthenticated && <UserOptions user={user} />}
+
     <Routes>
     <Route path ="/" Component={Home} />
     <Route path ="/product/:id" Component={ProductDetails} />
@@ -62,7 +79,27 @@ function App() {
     <Route path="/password/reset/:token" Component={ResetPassword} />
     <Route path="/cart" Component={Cart} />
     <Route path="/login/delivery" Component={Delivery} />
+
     
+    {stripeApiKey && (
+     <Route
+         path="/process/payment"
+         element=
+         {
+         <Elements stripe={loadStripe(stripeApiKey)}>
+         <Payment/>
+        </Elements>
+      }
+      />)}
+
+    <Route path="/success" Component={OrderSuccess} /> 
+    <Route path="/orders" Component={MyOrders} /> 
+
+
+    <Route path="/order/confirm" Component={ConfirmOrder} />
+    <Route path="/orders/:id" Component={OrderDetails} /> 
+   
+
   
   
     </Routes>

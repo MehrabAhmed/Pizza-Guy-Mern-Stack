@@ -1,6 +1,6 @@
 import React, {Fragment, useRef, useState, useEffect} from 'react'
 import "./LoginSignUp.css";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";

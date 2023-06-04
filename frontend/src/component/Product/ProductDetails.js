@@ -105,11 +105,11 @@ const ProductDetails = () => {
                     <input readOnly type="number" value={quantity}/>
                     <button onClick={increaseQuantity}>+</button>
                   </div>{" "}
-                  <button onClick={addToCartHandler}>Add to Cart</button>
+                  <button disabled = {product.available = false ? true: false}onClick={addToCartHandler}>Add to Cart</button>
                 </div>
                    <p>Available:{" "}
                    <b className={product.available = false ? "redColor" : "greenColor"}>
-                    {product.available < false ? "No" : "Yes"}
+                    {product.available = false ? "No" : "Yes"}
                   </b>
                    </p>
                 </div>

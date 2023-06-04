@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useAlert } from "react-alert";
-// import CheckoutSteps from "../Cart/CheckoutSteps";
+import CheckoutSteps from "../Cart/CheckoutSteps.js";
 import { useNavigate } from 'react-router-dom';
 
 const Delivery = () => {
@@ -25,8 +25,8 @@ const Delivery = () => {
   const deliverySubmit = (e) => {
     e.preventDefault();
 
-    if (phoneNo.length < 10 || phoneNo.length > 10) {
-      alert.error("Phone Number should be 10 digits Long");
+    if (phoneNo.length < 11 || phoneNo.length > 11) {
+      alert.error("Phone Number should be 11 digits Long");
       return;
     }
     dispatch(
@@ -39,7 +39,7 @@ const Delivery = () => {
     <Fragment>
       <MetaData title="Delivery Details" />
 
-      {/* <CheckoutSteps activeStep={0} /> */}
+      <CheckoutSteps activeStep={0} />
 
       <div className="deliveryContainer">
         <div className="deliveryBox">
