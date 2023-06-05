@@ -36,8 +36,9 @@ import NewProduct from "./component/admin/NewProduct.js"
 import UpdateProduct from "./component/admin/UpdateProduct.js"
 import OrderList from "./component/admin/OrderList.js"
 import ProcessOrder from "./component/admin/ProcessOrder.js"
-
-ProcessOrder
+import UsersList from "./component/admin/UsersList.js"
+import UpdateUser from "./component/admin/UpdateUser.js"
+import ProductReviews from "./component/admin/ProductReviews.js"
 
 axios.defaults.withCredentials=true
 
@@ -221,6 +222,33 @@ function App() {
         </ProtectedRoute>
       }
     /> */}
+
+    <Route
+      path="/admin/users"
+      element={
+        <ProtectedRoute>
+          <UsersList/>
+        </ProtectedRoute>
+      }
+    />
+     <Route path="/admin/user/:id" Component={UpdateUser} />
+    {/* <Route
+      path="/admin/order/:id"
+      element={
+        <ProtectedRoute>
+          <ProcessOrder/>
+        </ProtectedRoute>
+      }
+    /> */}
+
+    <Route
+      path="/admin/reviews"
+      element={
+        <ProtectedRoute>
+          <ProductReviews/>
+        </ProtectedRoute>
+      }
+    />
   
   
     </Routes>

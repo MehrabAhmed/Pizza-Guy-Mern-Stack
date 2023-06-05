@@ -6,7 +6,7 @@ import SideBar from "./Sidebar";
 import {
   getOrderDetails,
   clearErrors,
-  updateOrder,
+  updateOrder, 
 } from "../../actions/orderAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
@@ -19,12 +19,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const ProcessOrder = () => {
 
-    const dispatch = useDispatch();
-    const alert = useAlert();
-    const navigate = useNavigate();
-    const params = useParams();
-    const{id} = useParams();
-    const [status, setStatus] = useState("");
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const navigate = useNavigate();
+  const params = useParams();
+  const{id} = useParams();
+  const [status, setStatus] = useState("");
 
   const { order, error, loading } = useSelector((state) => state.orderDetails);
   const { error: updateError, isUpdated } = useSelector((state) => state.order);
@@ -152,7 +152,7 @@ const ProcessOrder = () => {
                   </div>
                 </div>
               </div>
-              {/*  */}
+
               <div
                 style={{
                   display: order.orderStatus === "Delivered" ? "none" : "block",
@@ -168,11 +168,15 @@ const ProcessOrder = () => {
                     <AccountTreeIcon />
                     <select onChange={(e) => setStatus(e.target.value)}>
                       <option value="">Choose Category</option>
-                      {order.orderStatus === "Processing" && (
-                        <option value="Sent">Sent</option>
+                      {order.orderStatus === "Preparing" && (
+                        <option value="Prepared">Prepared</option>
                       )}
 
-                      {order.orderStatus === "Sent" && (
+                      {order.orderStatus === "Prepared" && (
+                        <option value="On your way">On your way</option>
+                      )}
+
+                      {order.orderStatus === "On your way" && (
                         <option value="Delivered">Delivered</option>
                       )}
                     </select>
