@@ -18,19 +18,19 @@ const productSchema = new mongoose.Schema({
        type:Number,
         default:0
     },
-    image:[
-       { public_id:{
+    images:[{
+        public_id:{
         type:String,
         required:true
     },
     url:{
         type:String,
         required:true
-    }}
-    ],
+    }}]
+    ,
     category:{
         type:String,
-       required: [true, "Please Enter product category"],
+    //    required: [true, "Please Enter product category"],
     
     },
     available:{

@@ -29,15 +29,22 @@ import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import MyOrders from "./component/Order/MyOrders.js";
 import OrderDetails from "./component/Order/OrderDetails.js";
+import Dashboard from "./component/admin/Dashboard.js";
+import ProtectedRoute from './component/Route/ProtectedRoute';
+import ProductList from "./component/admin/ProductList.js";
+import NewProduct from "./component/admin/NewProduct.js"
+import UpdateProduct from "./component/admin/UpdateProduct.js"
+import OrderList from "./component/admin/OrderList.js"
+import ProcessOrder from "./component/admin/ProcessOrder.js"
 
-// import ProtectedRoute from './component/Route/ProtectedRoute';
+ProcessOrder
 
 axios.defaults.withCredentials=true
 
 
 function App() {
 
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated, user} = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
 
   async function getStripeApiKey() {
@@ -72,34 +79,148 @@ function App() {
     <Route path ="/login" Component={LoginSignUp} />
 
     
-    <Route path="/account" Component={Profile} />
-    <Route path="/myself/update" Component={UpdateProfile} />
-    <Route path="/password/update" Component={UpdatePassword} />
-    <Route path="/password/forgot" Component={ForgotPassword} />
+    {/* <Route path="/account" Component={Profile} /> */}
+    <Route
+      path="/account"
+      element={
+        <ProtectedRoute>
+          <Profile/>
+        </ProtectedRoute>
+      }
+    />
+    {/* <Route path="/myself/update" Component={UpdateProfile} /> */}
+    <Route
+      path="/myself/update"
+      element={
+        <ProtectedRoute>
+          <UpdateProfile/>
+        </ProtectedRoute>
+      }
+    />
+    {/* <Route path="/password/update" Component={UpdatePassword} /> */}
+    <Route
+      path="/password/update"
+      element={
+        <ProtectedRoute>
+          <UpdatePassword/>
+        </ProtectedRoute>
+      }
+    />
+ 
     <Route path="/password/reset/:token" Component={ResetPassword} />
     <Route path="/cart" Component={Cart} />
-    <Route path="/login/delivery" Component={Delivery} />
+    {/* <Route path="/login/delivery" Component={Delivery} /> */}
+    <Route
+      path="/login/delivery"
+      element={
+        <ProtectedRoute>
+          <Delivery/>
+        </ProtectedRoute>
+      }
+    />
 
-    
     {stripeApiKey && (
      <Route
          path="/process/payment"
          element=
          {
          <Elements stripe={loadStripe(stripeApiKey)}>
-         <Payment/>
+           <ProtectedRoute>
+              <Payment/>
+           </ProtectedRoute>
         </Elements>
       }
       />)}
 
-    <Route path="/success" Component={OrderSuccess} /> 
-    <Route path="/orders" Component={MyOrders} /> 
+    {/* <Route path="/success" Component={OrderSuccess} />  */}
+    <Route
+      path="/success"
+      element={
+        <ProtectedRoute>
+          <OrderSuccess/>
+        </ProtectedRoute>
+      }
+    />
+    {/* <Route path="/orders" Component={MyOrders} />  */}
+    <Route
+      path="/orders"
+      element={
+        <ProtectedRoute>
+          <MyOrders/>
+        </ProtectedRoute>
+      }
+    />
+    {/* <Route path="/order/confirm" Component={ConfirmOrder} /> */}
+    <Route
+      path="/order/confirm"
+      element={
+        <ProtectedRoute>
+          <ConfirmOrder/>
+        </ProtectedRoute>
+      }
+    />
+    {/* <Route path="/orders/:id" Component={OrderDetails} />  */}
+    <Route
+      path="orders/:id"
+      element={
+        <ProtectedRoute>
+          <OrderDetails/>
+        </ProtectedRoute>
+      }
+    />
+    {/* Admin  Routes */}
+    <Route
+      path="/admin/dashboard"
+      element={
+        <ProtectedRoute>
+          <Dashboard/>
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/admin/products"
+      element={
+        <ProtectedRoute>
+          <ProductList/>
+        </ProtectedRoute>
+      }
+    />
 
+   <Route
+      path="/admin/product/new"
+      element={
+        <ProtectedRoute>
+          <NewProduct/>
+        </ProtectedRoute>
+      }
+    />
+    <Route path="/admin/product/:id" Component={UpdateProduct} />
+  {/* <Route
+      path="/admin/product/:id"
+      element={
+        <ProtectedRoute>
+          <UpdateProduct/>
+        </ProtectedRoute>
+      }
+    /> */}
 
-    <Route path="/order/confirm" Component={ConfirmOrder} />
-    <Route path="/orders/:id" Component={OrderDetails} /> 
-   
-
+     <Route
+      path="/admin/orders"
+      element={
+        <ProtectedRoute>
+          <OrderList/>
+        </ProtectedRoute>
+      }
+    />
+    <Route path="/admin/order/:id" Component={ProcessOrder} />
+    {/* <Route
+      path="/admin/order/:id"
+      element={
+        <ProtectedRoute>
+          <ProcessOrder/>
+        </ProtectedRoute>
+      }
+    /> */}
   
   
     </Routes>
