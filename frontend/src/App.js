@@ -42,14 +42,17 @@ import ProductReviews from "./component/admin/ProductReviews.js"
 
 axios.defaults.withCredentials=true
 
+window.name = 'http://localhost:4000'
+
 
 function App() {
 
   const { isAuthenticated, user} = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
+  // const global = "http://localhost:4000"
 
   async function getStripeApiKey() {
-    const { data } = await axios.get("http://localhost:4000/api/v1/stripeapikey");
+    const { data } = await axios.get(`${window.name}/api/v1/stripeapikey`);
 
     setStripeApiKey(data.stripeApiKey);
   }
@@ -78,6 +81,7 @@ function App() {
     <Route path ="/products/:keyword" Component={Products} />
     <Route path ="/search" Component={Search} />
     <Route path ="/login" Component={LoginSignUp} />
+    <Route path="/password/forgot" Component={ForgotPassword} />
 
     
     {/* <Route path="/account" Component={Profile} /> */}

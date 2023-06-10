@@ -42,6 +42,21 @@ exports.createProduct = catchAsyncErrors(async (req, res, next)=>
     });
 });
 
+//add Size
+exports.setsize = catchAsyncErrors( async(req, res, next) =>{
+
+  const {size} = req.body;
+
+  const s = await Product.create({
+    size
+  })
+  res.status(201).json({
+    success: true,
+    s
+});
+
+});
+
 //Get All Product
 exports.getAllProducts = catchAsyncErrors(async(req, res)=>{
 

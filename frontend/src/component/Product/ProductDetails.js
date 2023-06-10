@@ -20,6 +20,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const {id} = useParams();
+
  
   const {product, loading, error} = useSelector(state=> state.productDetails)
   const { success, error: reviewError } = useSelector(
@@ -55,6 +56,7 @@ const ProductDetails = () => {
       }
 
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("small");
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -73,12 +75,32 @@ const ProductDetails = () => {
       const qty = quantity - 1;
       setQuantity(qty);
    };
+   const Large = () =>
+   {
+    const size = "Large";
+    setSize(size)
+   }
+
+   const Medium = () =>
+   {
+    const size = "Medium";
+    setSize(size)
+   }
+
+   const Small = () =>
+   {
+    const size = "Small";
+    setSize(size)
+   }
  
    
    const addToCartHandler = () => {
-   dispatch(addItemsToCart(id, quantity));
+   dispatch(addItemsToCart(id, quantity, size));
+
    alert.success("Item Added To Cart");
   };
+
+  
 
   const submitReviewToggle = () => {
     open ? setOpen(false) : setOpen(true);
@@ -121,6 +143,7 @@ const ProductDetails = () => {
            <div>
              <div className="detailsBlock-1">
                   <h2>{product.name}</h2>
+                  <h2>{product.category}</h2>
                   <p>Product #{product._id}</p>
              </div>
              <div className="detailsBlock-2">
@@ -145,7 +168,22 @@ const ProductDetails = () => {
                     {product.available = false ? "No" : "Yes"}
                   </b>
                    </p>
+                   
                 </div>
+                <div>
+        
+          <button onClick={Small} value={size}>Small</button>
+          
+          <button onClick={Medium} value={size}>Medium</button>
+        
+          <button onClick={Large} value={size}>Large</button>
+       
+      </div>
+      
+   
+                
+           
+                
                 <div className="detailsBlock-4">
                 Description : <p>{product.description}</p>
               </div>

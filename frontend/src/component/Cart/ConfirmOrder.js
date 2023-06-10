@@ -69,8 +69,10 @@ const ConfirmOrder = () => {
                   <div key={item.product}>
                     <img src={item.image} alt="Product" />
                     <Link to={`/product/${item.product}`}>
-                      {item.name}
+                    <p>Subtotal:</p>
                     </Link>{" "}
+                    <p>Size: </p>
+                    <span>{item.size}</span>
                     <span>
                       {item.quantity} X Rs. {item.price} ={" "}
                       <b>Rs. {item.price * item.quantity}</b>

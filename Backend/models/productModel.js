@@ -33,6 +33,12 @@ const productSchema = new mongoose.Schema({
     //    required: [true, "Please Enter product category"],
     
     },
+
+    size:{
+        type:String,
+    //    required: [true, "Please Enter product category"],
+    
+    },
     available:{
         type: Boolean,
         required: [true, "Please Enter product avaliblity"],

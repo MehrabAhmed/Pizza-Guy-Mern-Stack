@@ -46,9 +46,11 @@ const UpdateProduct = () => {
     "Midnight Deals",
     "Summer Crazy Deals",
     "Chicken Pizza",
+    "Cheese Pizza",
     "Beef Pizza",
+    "Burger",
     "Vegetable Pizza",
-    "Sandwich",
+    "Sandwichs",
     "Appetizers,Wing & Beverages",
   ];
 
